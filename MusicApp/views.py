@@ -12,3 +12,6 @@ def upload_music(request):
         encrypt_music(music_file.temporary_file_path())
     
     return render(request, 'upload_music.html')
+def music_list(request):
+    music_files = MusicFile.objects.all()
+    return render(request, 'music_list.html', {'music_files': music_files})

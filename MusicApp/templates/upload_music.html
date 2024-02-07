@@ -11,7 +11,8 @@
     <h1>Upload Music</h1>
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        <input type="file" name="music_file">
+        <label for="music_file">Choose a music file:</label>
+        <input type="file" name="music_file" id="music_file">
         <button type="submit">Upload</button>
     </form>
 </body>
