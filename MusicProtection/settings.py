@@ -82,9 +82,9 @@ WSGI_APPLICATION = 'MusicProtection.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'nom_de_votre_base_de_donnees',
-        'USER': 'votre_utilisateur_mysql',
-        'PASSWORD': 'votre_mot_de_passe_mysql',
+        'NAME': 'musicprotection_db',
+        'USER': 'root',
+        'PASSWORD': 'Rootroot',
         'HOST': 'localhost',   # Si votre base de données est sur un autre hôte, modifiez-le en conséquence
         'PORT': '3306',        # Le port MySQL par défaut est 3306
     }
