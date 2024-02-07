@@ -73,13 +73,22 @@ WSGI_APPLICATION = 'MusicProtection.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'nom_de_votre_base_de_donnees',
+        'USER': 'votre_utilisateur_mysql',
+        'PASSWORD': 'votre_mot_de_passe_mysql',
+        'HOST': 'localhost',   # Si votre base de données est sur un autre hôte, modifiez-le en conséquence
+        'PORT': '3306',        # Le port MySQL par défaut est 3306
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
