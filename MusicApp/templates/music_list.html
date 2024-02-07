@@ -1,0 +1,20 @@
+<!-- MusicApp/templates/music_list.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des fichiers musicaux</title>
+</head>
+<body>
+    <h1>Liste des fichiers musicaux</h1>
+    <ul>
+        {% for music_file in music_files %}
+            <li>{{ music_file }}
+                <a href="{% url 'download_decrypted_music' music_file %}">Télécharger</a>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
