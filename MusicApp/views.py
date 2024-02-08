@@ -10,7 +10,6 @@ def upload_music(request):
         encrypted_file_path = 'encrypted_music/' + music_file.name
         MusicFile.objects.create(name=music_file.name, encrypted_file=encrypted_file_path)
         encrypt_music(music_file.temporary_file_path())
-    
     return render(request, 'upload_music.html')
 def music_list(request):
     music_files = MusicFile.objects.all()
