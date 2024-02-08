@@ -28,20 +28,10 @@ def upload_music(request):
                 pass
                 # fermerture du fichier temporaire
         finally:
-                if 'file_path' in locals() and os.path.exist(file_path):
-                    os.close(file_path)
+                # Supprimer le fichier temporaire
+                if 'file_path' in locals() and os.path.exists(file_path):
+                    os.remove(file_path)
     return render(request, 'upload_music.html')
-                        
-
-
-
-
-
-
-
-
-
-
 
 def music_list(request):
     music_files = MusicFile.objects.all()
