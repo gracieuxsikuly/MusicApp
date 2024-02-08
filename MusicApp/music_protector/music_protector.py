@@ -16,8 +16,10 @@ def encrypt_music(file_path):
     with open(file_path + '.enc', 'wb') as encrypted_file:
         encrypted_file.write(encrypted_content)
 
-    # Supprimer le fichier original non chiffré (optionnel)
-    os.remove(file_path)
+    try:
+        os.remove(file_path)
+    except Exception as e:
+        print(f"Erreur lors de la suppression du fichier original : {e}")
 
 def decrypt_music(file_path):
     with open(file_path, 'rb') as encrypted_file:
@@ -28,5 +30,8 @@ def decrypt_music(file_path):
     with open(file_path[:-4], 'wb') as decrypted_file:  # Retirer l'extension .enc
         decrypted_file.write(decrypted_content)
 
-    # Supprimer le fichier chiffré (optionnel)
-    os.remove(file_path)
+     # Supprimer le fichier chiffré (optionnel)
+    try:
+        os.remove(file_path)
+    except Exception as e:
+        print(f"Erreur lors de la suppression du fichier chiffré : {e}")

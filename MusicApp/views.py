@@ -5,7 +5,7 @@ from .models import MusicFile
 from .music_protector.music_protector import encrypt_music
 from django.core.files.uploadedfile import TemporaryUploadedFile
 import os
-
+import shutil  # Pour déplacer les fichiers
 def upload_music(request):
     if request.method == 'POST':
         try:
@@ -14,23 +14,28 @@ def upload_music(request):
             if isinstance(music_file,TemporaryUploadedFile):
                 #chemin du fichier temporaire
                 file_path=music_file.temporary_file_path()
-                #creation du chemin pour le fichier  chiffré
-                encrypted_file_path = 'encrypted_music/'+music_file.name
-                #creation de l'objet MusicFile dans la base de données
+                # Chemin pour le fichier chiffré
+                encrypted_file_path = os.path.join('encrypted_music', music_file.name)
+                # Appel à la fonction de chiffrement
+                encrypt_music(file_path)
+                # Création de l'objet MusicFile dans la base de données
                 MusicFile.objects.create(
                     name=music_file.name,
                     encrypted_file=encrypted_file_path
                 )
-                #Appel a la fonction de chiffrement
-                encrypt_music(file_path)
+                # Déplacer le fichier chiffré vers le répertoire dédié
+                shutil.move(encrypted_file_path + '.enc', 'MusicApp/encrypted_music')
             else:
                 # gerer le cas ou le fichier n'est pas temporaire
                 pass
                 # fermerture du fichier temporaire
+                
         finally:
-                # Supprimer le fichier temporaire
-                if 'file_path' in locals() and os.path.exists(file_path):
-                    os.remove(file_path)
+            # Fermer et supprimer le fichier temporaire
+            if 'file_path' in locals() and os.path.exists(file_path):
+                with open(file_path, 'rb') as file:
+                    file.close()  # Fermer le fichier
+                # os.remove(file_path)  # Supprimer le fichier
     return render(request, 'upload_music.html')
 
 def music_list(request):
