@@ -6,6 +6,9 @@ from .music_protector.music_protector import encrypt_music
 from django.core.files.uploadedfile import TemporaryUploadedFile
 import os
 import shutil  # Pour déplacer les fichiers
+# Chemin absolu vers le répertoire de destination
+destination_directory = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'encrypted_music')
+
 def upload_music(request):
     if request.method == 'POST':
         try:
@@ -18,13 +21,15 @@ def upload_music(request):
                 encrypted_file_path = os.path.join('encrypted_music', music_file.name)
                 # Appel à la fonction de chiffrement
                 encrypt_music(file_path)
+                # Création du répertoire de destination s'il n'existe pas
+                os.makedirs(destination_directory, exist_ok=True)
                 # Création de l'objet MusicFile dans la base de données
                 MusicFile.objects.create(
                     name=music_file.name,
                     encrypted_file=encrypted_file_path
                 )
                 # Déplacer le fichier chiffré vers le répertoire dédié
-                shutil.move(encrypted_file_path + '.enc', 'MusicApp/encrypted_music')
+                shutil.move(encrypted_file_path + '.enc', destination_directory)
             else:
                 # gerer le cas ou le fichier n'est pas temporaire
                 pass
